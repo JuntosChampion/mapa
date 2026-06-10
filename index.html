@@ -1145,6 +1145,12 @@ function deleteVisit(visitId) {
   updateProgressChip();
 }
 
+function openVisitFromPopup(idx) {
+  map.closePopup();
+  selectClient(idx);
+  setTimeout(() => openVisitPanel(idx), 200);
+}
+
 function openVisitPanel(idx) {
   currentVisitIdx = idx;
   visitPanelOpen = true;
@@ -1452,6 +1458,9 @@ function buildPopupHtml(c) {
         <div class="popup-field full"><div class="popup-field-label">Último Pedido</div><div class="popup-field-value">${formatDate(c['ULTIMO PEDIDO'])}</div></div>
         <div class="popup-field full"><div class="popup-field-label">Cadena</div><div class="popup-field-value">${c.CADENA || '—'}</div></div>
       </div>
+      <button onclick="openVisitFromPopup(${CLIENTES.indexOf(c)})" style="margin-top:8px;width:100%;background:#c53030;color:#fff;border:none;border-radius:7px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;">
+        ✏️ Encuesta
+      </button>
     </div>`;
 }
 
