@@ -32,18 +32,12 @@
   .loading-sub { color: #4a5568; font-size: 11px; }
 
 /* ===================== MOBILE RESPONSIVE ===================== */
-@media (max-width: 768px) {
 
-  /* HEADER */
+/* Tablets (768px y menos) */
+@media (max-width: 768px) {
   header { padding: 6px 10px; gap: 6px; flex-wrap: wrap; }
   header img { height: 26px !important; }
-  .stats-bar {
-    width: 100%; order: 3;
-    overflow-x: auto; flex-wrap: nowrap;
-    gap: 5px; padding-bottom: 2px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
+  .stats-bar { width: 100%; order: 3; overflow-x: auto; flex-wrap: nowrap; gap: 5px; padding-bottom: 2px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .stats-bar::-webkit-scrollbar { display: none; }
   .stat-chip { padding: 3px 8px; font-size: 10px; white-space: nowrap; flex-shrink: 0; }
   .stat-chip .count { font-size: 11px; }
@@ -51,30 +45,77 @@
   .upload-btn { font-size: 11px; padding: 5px 10px; }
   .logout-btn { font-size: 11px; }
   .progress-chip { font-size: 11px; padding: 3px 8px; }
-
-  /* SIDEBAR — narrower on mobile */
   .sidebar { width: 260px; min-width: 260px; }
   .toggle-btn { left: 260px !important; }
-  .search-box { font-size: 14px; padding: 9px 12px; }
-  .route-chip { font-size: 11px; padding: 4px 10px; }
-  .client-item { padding: 10px 12px; }
-  .client-name { font-size: 12px; }
-  .client-addr { font-size: 11px; }
-  .client-type { font-size: 10px; }
-
-  /* VISIT PANEL — narrower */
   .visit-panel { width: 280px; }
-  .vfield input, .vfield select { font-size: 16px !important; padding: 9px 10px; }
-  .vsave-btn { padding: 12px; font-size: 13px; }
-  .vcheckbox-item { padding: 9px 10px; }
-  .vcheckbox-label { font-size: 12px; }
-  .vopen-btn { width: 48px !important; height: 48px !important; font-size: 20px !important; }
-
-  /* POPUP */
+  .vfield input, .vfield select { font-size: 16px !important; }
   .leaflet-popup-content-wrapper { max-width: 85vw !important; }
-  .popup-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
-  .popup-field { padding: 5px 7px; }
-  .popup-field-value { font-size: 11px; }
+}
+
+/* iPhone 14 Pro / 13 / 12 y similares (390px) */
+@media (max-width: 430px) {
+  header { padding: 5px 8px; gap: 4px; flex-wrap: wrap; }
+  header img { height: 22px !important; }
+  .stats-bar { width: 100%; order: 3; overflow-x: auto; flex-wrap: nowrap; gap: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .stats-bar::-webkit-scrollbar { display: none; }
+  .stat-chip { padding: 2px 7px; font-size: 9px; white-space: nowrap; flex-shrink: 0; }
+  .stat-chip .dot { width: 6px; height: 6px; }
+  .stat-chip .count { font-size: 10px; }
+  .user-badge { padding: 2px 7px; font-size: 10px; gap: 4px; }
+  .user-badge img { height: 14px !important; width: 14px !important; }
+  .upload-btn { font-size: 10px; padding: 4px 8px; gap: 4px; }
+  .logout-btn { font-size: 10px; }
+  .progress-chip { font-size: 10px; padding: 2px 7px; }
+  .progress-chip .prog-done { font-size: 11px; }
+
+  /* Sidebar ocupa 75% del ancho */
+  .sidebar { width: 75vw; min-width: 200px; }
+  .toggle-btn { left: 75vw !important; }
+  .sidebar-header { padding: 10px 12px; }
+  .search-box { font-size: 14px; padding: 8px 10px; }
+  .route-chip { font-size: 10px; padding: 3px 8px; }
+  .route-filter-label, .vfield-label { font-size: 9px; }
+  .results-count { font-size: 10px; }
+  .client-item { padding: 8px 10px; gap: 7px; }
+  .client-name { font-size: 11px; }
+  .client-addr { font-size: 10px; }
+  .client-type { font-size: 9px; }
+
+  /* Visit panel ocupa 80% del ancho */
+  .visit-panel { width: 80vw; min-width: 220px; }
+  .visit-panel-header { padding: 10px 12px; }
+  .visit-panel-title { font-size: 12px; }
+  .visit-panel-sub { font-size: 9px; }
+  .visit-body { padding: 10px 12px; gap: 9px; }
+  .vfield input, .vfield select { font-size: 16px !important; padding: 8px 9px; }
+  .vfield-label { font-size: 9px; }
+  .vsave-btn { padding: 11px; font-size: 12px; }
+  .vcheckbox-item { padding: 7px 9px; }
+  .vcheckbox-label { font-size: 11px; }
+  .vopen-btn { width: 44px !important; height: 44px !important; font-size: 18px !important; bottom: 16px !important; right: 10px !important; }
+  .vexport-section { padding: 8px 12px; }
+  .vexport-btn { font-size: 11px; padding: 7px; }
+
+  /* Popup más compacto */
+  .leaflet-popup-content-wrapper { max-width: 88vw !important; }
+  .popup-body { padding: 10px 12px; }
+  .popup-name { font-size: 12px; }
+  .popup-addr { font-size: 10px; }
+  .popup-grid { gap: 4px; }
+  .popup-field { padding: 4px 6px; }
+  .popup-field-label { font-size: 8px; }
+  .popup-field-value { font-size: 10px; }
+  .popup-id { font-size: 12px; }
+  .popup-type-badge { font-size: 9px; padding: 2px 6px; }
+}
+
+/* iPhone SE / pantallas muy pequeñas (375px y menos) */
+@media (max-width: 375px) {
+  .stat-chip { font-size: 8px; padding: 2px 6px; }
+  .sidebar { width: 80vw; }
+  .toggle-btn { left: 80vw !important; }
+  .visit-panel { width: 85vw; }
+  header img { height: 20px !important; }
 }
 
 </style>
@@ -601,18 +642,12 @@
 
 
 /* ===================== MOBILE RESPONSIVE ===================== */
-@media (max-width: 768px) {
 
-  /* HEADER */
+/* Tablets (768px y menos) */
+@media (max-width: 768px) {
   header { padding: 6px 10px; gap: 6px; flex-wrap: wrap; }
   header img { height: 26px !important; }
-  .stats-bar {
-    width: 100%; order: 3;
-    overflow-x: auto; flex-wrap: nowrap;
-    gap: 5px; padding-bottom: 2px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
+  .stats-bar { width: 100%; order: 3; overflow-x: auto; flex-wrap: nowrap; gap: 5px; padding-bottom: 2px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .stats-bar::-webkit-scrollbar { display: none; }
   .stat-chip { padding: 3px 8px; font-size: 10px; white-space: nowrap; flex-shrink: 0; }
   .stat-chip .count { font-size: 11px; }
@@ -620,30 +655,77 @@
   .upload-btn { font-size: 11px; padding: 5px 10px; }
   .logout-btn { font-size: 11px; }
   .progress-chip { font-size: 11px; padding: 3px 8px; }
-
-  /* SIDEBAR — narrower on mobile */
   .sidebar { width: 260px; min-width: 260px; }
   .toggle-btn { left: 260px !important; }
-  .search-box { font-size: 14px; padding: 9px 12px; }
-  .route-chip { font-size: 11px; padding: 4px 10px; }
-  .client-item { padding: 10px 12px; }
-  .client-name { font-size: 12px; }
-  .client-addr { font-size: 11px; }
-  .client-type { font-size: 10px; }
-
-  /* VISIT PANEL — narrower */
   .visit-panel { width: 280px; }
-  .vfield input, .vfield select { font-size: 16px !important; padding: 9px 10px; }
-  .vsave-btn { padding: 12px; font-size: 13px; }
-  .vcheckbox-item { padding: 9px 10px; }
-  .vcheckbox-label { font-size: 12px; }
-  .vopen-btn { width: 48px !important; height: 48px !important; font-size: 20px !important; }
-
-  /* POPUP */
+  .vfield input, .vfield select { font-size: 16px !important; }
   .leaflet-popup-content-wrapper { max-width: 85vw !important; }
-  .popup-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
-  .popup-field { padding: 5px 7px; }
-  .popup-field-value { font-size: 11px; }
+}
+
+/* iPhone 14 Pro / 13 / 12 y similares (390px) */
+@media (max-width: 430px) {
+  header { padding: 5px 8px; gap: 4px; flex-wrap: wrap; }
+  header img { height: 22px !important; }
+  .stats-bar { width: 100%; order: 3; overflow-x: auto; flex-wrap: nowrap; gap: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .stats-bar::-webkit-scrollbar { display: none; }
+  .stat-chip { padding: 2px 7px; font-size: 9px; white-space: nowrap; flex-shrink: 0; }
+  .stat-chip .dot { width: 6px; height: 6px; }
+  .stat-chip .count { font-size: 10px; }
+  .user-badge { padding: 2px 7px; font-size: 10px; gap: 4px; }
+  .user-badge img { height: 14px !important; width: 14px !important; }
+  .upload-btn { font-size: 10px; padding: 4px 8px; gap: 4px; }
+  .logout-btn { font-size: 10px; }
+  .progress-chip { font-size: 10px; padding: 2px 7px; }
+  .progress-chip .prog-done { font-size: 11px; }
+
+  /* Sidebar ocupa 75% del ancho */
+  .sidebar { width: 75vw; min-width: 200px; }
+  .toggle-btn { left: 75vw !important; }
+  .sidebar-header { padding: 10px 12px; }
+  .search-box { font-size: 14px; padding: 8px 10px; }
+  .route-chip { font-size: 10px; padding: 3px 8px; }
+  .route-filter-label, .vfield-label { font-size: 9px; }
+  .results-count { font-size: 10px; }
+  .client-item { padding: 8px 10px; gap: 7px; }
+  .client-name { font-size: 11px; }
+  .client-addr { font-size: 10px; }
+  .client-type { font-size: 9px; }
+
+  /* Visit panel ocupa 80% del ancho */
+  .visit-panel { width: 80vw; min-width: 220px; }
+  .visit-panel-header { padding: 10px 12px; }
+  .visit-panel-title { font-size: 12px; }
+  .visit-panel-sub { font-size: 9px; }
+  .visit-body { padding: 10px 12px; gap: 9px; }
+  .vfield input, .vfield select { font-size: 16px !important; padding: 8px 9px; }
+  .vfield-label { font-size: 9px; }
+  .vsave-btn { padding: 11px; font-size: 12px; }
+  .vcheckbox-item { padding: 7px 9px; }
+  .vcheckbox-label { font-size: 11px; }
+  .vopen-btn { width: 44px !important; height: 44px !important; font-size: 18px !important; bottom: 16px !important; right: 10px !important; }
+  .vexport-section { padding: 8px 12px; }
+  .vexport-btn { font-size: 11px; padding: 7px; }
+
+  /* Popup más compacto */
+  .leaflet-popup-content-wrapper { max-width: 88vw !important; }
+  .popup-body { padding: 10px 12px; }
+  .popup-name { font-size: 12px; }
+  .popup-addr { font-size: 10px; }
+  .popup-grid { gap: 4px; }
+  .popup-field { padding: 4px 6px; }
+  .popup-field-label { font-size: 8px; }
+  .popup-field-value { font-size: 10px; }
+  .popup-id { font-size: 12px; }
+  .popup-type-badge { font-size: 9px; padding: 2px 6px; }
+}
+
+/* iPhone SE / pantallas muy pequeñas (375px y menos) */
+@media (max-width: 375px) {
+  .stat-chip { font-size: 8px; padding: 2px 6px; }
+  .sidebar { width: 80vw; }
+  .toggle-btn { left: 80vw !important; }
+  .visit-panel { width: 85vw; }
+  header img { height: 20px !important; }
 }
 
 </style>
