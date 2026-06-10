@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>html { height: 100%; } body { height: 100%; touch-action: manipulation; }</style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -34,7 +33,7 @@
 </style>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e2e8f0; height: 100%; min-height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e2e8f0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
   /* HEADER */
   header {
@@ -67,7 +66,7 @@
   .stat-chip .count { font-weight: 700; font-size: 13px; }
 
   /* LAYOUT */
-  .app-body { display: flex; flex: 1; overflow: hidden; min-height: 0; position: relative; }
+  .app-body { display: flex; flex: 1; overflow: hidden; }
 
   /* SIDEBAR */
   .sidebar {
@@ -402,189 +401,6 @@
   .vexport-btn:hover { background: rgba(72,187,120,0.22); }
   .vadmin-note { font-size: 10px; color: #4a5568; text-align: center; margin-top: 4px; }
 
-/* ===================== MOBILE RESPONSIVE ===================== */
-@media (max-width: 768px) {
-
-  /* HEADER */
-  header {
-    padding: 8px 12px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  header img { height: 26px !important; }
-  .stats-bar {
-    width: 100%;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    gap: 5px;
-    padding-bottom: 2px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .stats-bar::-webkit-scrollbar { display: none; }
-  .stat-chip { padding: 4px 10px; font-size: 11px; white-space: nowrap; flex-shrink: 0; }
-  .stat-chip .count { font-size: 12px; }
-
-  /* LAYOUT — mapa ocupa todo */
-  .app-body { position: relative; }
-  .sidebar {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    width: 100% !important;
-    min-width: 100% !important;
-    height: 65vh;
-    border-right: none;
-    border-top: 1px solid #2d3748;
-    border-radius: 16px 16px 0 0;
-    z-index: 600;
-    transform: translateY(100%);
-    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-    box-shadow: 0 -8px 32px rgba(0,0,0,0.5);
-  }
-  .sidebar.mobile-open {
-    transform: translateY(0);
-  }
-  .sidebar.collapsed {
-    width: 100% !important;
-    transform: translateY(100%);
-  }
-
-  /* Drag handle */
-  .sidebar::before {
-    content: '';
-    display: block;
-    width: 40px; height: 4px;
-    background: #4a5568;
-    border-radius: 2px;
-    margin: 10px auto 6px;
-    flex-shrink: 0;
-  }
-
-  .sidebar-header { padding: 8px 14px 10px; }
-  .search-box { font-size: 14px; padding: 10px 12px; }
-  .route-filter-wrap, .frec-filter-wrap { margin-top: 8px; }
-  .route-chips { gap: 6px; }
-  .route-chip { font-size: 12px; padding: 5px 12px; }
-  .results-count { font-size: 12px; margin-top: 6px; }
-
-  .client-item { padding: 12px 14px; }
-  .client-name { font-size: 13px; }
-  .client-addr { font-size: 12px; }
-  .client-type { font-size: 11px; }
-  .client-dot { width: 11px; height: 11px; margin-top: 3px; }
-
-  /* Hide desktop toggle btn */
-  .toggle-btn { display: none !important; }
-
-  /* MAP full screen */
-  #map { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
-  .app-body { position: relative; }
-
-  /* MOBILE BOTTOM NAV */
-  .mobile-nav {
-    display: flex !important;
-  }
-
-  /* VISIT PANEL — full screen drawer from bottom */
-  .visit-panel {
-    position: fixed !important;
-    top: auto !important;
-    bottom: 0; left: 0; right: 0;
-    width: 100% !important;
-    height: 90vh;
-    border-left: none !important;
-    border-top: 1px solid #2d3748;
-    border-radius: 16px 16px 0 0;
-    transform: translateY(100%) !important;
-    z-index: 700;
-    box-shadow: 0 -8px 32px rgba(0,0,0,0.6);
-  }
-  .visit-panel.open {
-    transform: translateY(0) !important;
-  }
-  .visit-panel-header { border-radius: 16px 16px 0 0; padding: 14px 16px; }
-  .visit-panel-header::before {
-    content: '';
-    display: block;
-    width: 40px; height: 4px;
-    background: rgba(255,255,255,0.3);
-    border-radius: 2px;
-    margin: -6px auto 10px;
-  }
-  .visit-body { padding: 14px 16px; }
-  .vfield input, .vfield select { font-size: 16px !important; padding: 10px 12px; }
-  .vsave-btn { padding: 14px; font-size: 14px; }
-  .vcheckbox-item { padding: 10px 12px; }
-  .vcheckbox-label { font-size: 13px; }
-
-  /* Floating visit btn — reposition */
-  .vopen-btn {
-    bottom: 76px !important;
-    right: 16px !important;
-    width: 52px !important;
-    height: 52px !important;
-    font-size: 22px !important;
-  }
-
-  /* Overlay when drawer open */
-  .mobile-overlay {
-    display: block !important;
-  }
-}
-
-/* MOBILE NAV BAR */
-.mobile-nav {
-  display: none;
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 60px;
-  background: #1a1f2e;
-  border-top: 1px solid #2d3748;
-  z-index: 550;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0 8px;
-  box-shadow: 0 -4px 16px rgba(0,0,0,0.3);
-}
-.mobile-nav-btn {
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  background: none; border: none;
-  color: #718096; font-size: 10px; font-weight: 600;
-  cursor: pointer; padding: 8px 16px; border-radius: 10px;
-  transition: all 0.15s; flex: 1;
-  -webkit-tap-highlight-color: transparent;
-}
-.mobile-nav-btn .nav-icon { font-size: 20px; line-height: 1; }
-.mobile-nav-btn.active { color: #f6ad55; }
-.mobile-nav-btn:active { background: rgba(255,255,255,0.07); }
-
-/* OVERLAY */
-.mobile-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 590;
-  backdrop-filter: blur(2px);
-}
-
-/* Touch-friendly map controls */
-@media (max-width: 768px) {
-  .leaflet-control-zoom a {
-    width: 36px !important;
-    height: 36px !important;
-    line-height: 36px !important;
-    font-size: 18px !important;
-  }
-  .leaflet-popup-content-wrapper {
-    max-width: 90vw !important;
-  }
-  .leaflet-popup-content {
-    min-width: unset !important;
-  }
-}
-
-
 /* ===================== FILE UPLOAD PANEL ===================== */
 .upload-btn {
   background: rgba(246,173,85,0.15);
@@ -847,109 +663,8 @@
 
 </div>
 
-<!-- MOBILE OVERLAY -->
-<div class="mobile-overlay" id="mobileOverlay"></div>
-
-<!-- MOBILE BOTTOM NAV -->
-<nav class="mobile-nav" id="mobileNav">
-  <button class="mobile-nav-btn active" id="navMap" onclick="mobileShowMap()">
-    <span class="nav-icon">🗺️</span>
-    <span>Mapa</span>
-  </button>
-  <button class="mobile-nav-btn" id="navList" onclick="mobileShowList()">
-    <span class="nav-icon">📋</span>
-    <span>Clientes</span>
-  </button>
-  <button class="mobile-nav-btn" id="navVisita" onclick="mobileShowVisita()">
-    <span class="nav-icon">✏️</span>
-    <span>Visita</span>
-  </button>
-  <button class="mobile-nav-btn" id="navFiltros" onclick="mobileShowFiltros()">
-    <span class="nav-icon">🔽</span>
-    <span>Filtros</span>
-  </button>
-</nav>
 
 <script>
-const isMobile = () => window.innerWidth <= 768;
-
-function mobileCloseAll() {
-  document.getElementById('sidebar').classList.remove('mobile-open');
-  document.getElementById('mobileOverlay').style.display = 'none';
-  document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
-}
-
-function mobileShowMap() {
-  mobileCloseAll();
-  document.getElementById('navMap').classList.add('active');
-  closeVisitPanel();
-}
-
-function mobileShowList() {
-  if (document.getElementById('sidebar').classList.contains('mobile-open')) {
-    mobileCloseAll();
-    document.getElementById('navMap').classList.add('active');
-  } else {
-    mobileCloseAll();
-    document.getElementById('sidebar').classList.add('mobile-open');
-    document.getElementById('mobileOverlay').style.display = 'block';
-    document.getElementById('navList').classList.add('active');
-    closeVisitPanel();
-  }
-}
-
-function mobileShowVisita() {
-  mobileCloseAll();
-  document.getElementById('navVisita').classList.add('active');
-  if (selectedId !== null) {
-    openVisitPanel(selectedId);
-  } else {
-    openVisitPanel(0);
-  }
-  document.getElementById('mobileOverlay').style.display = 'block';
-}
-
-function mobileShowFiltros() {
-  if (document.getElementById('sidebar').classList.contains('mobile-open')) {
-    mobileCloseAll();
-    document.getElementById('navMap').classList.add('active');
-  } else {
-    mobileCloseAll();
-    document.getElementById('sidebar').classList.add('mobile-open');
-    document.getElementById('mobileOverlay').style.display = 'block';
-    document.getElementById('navFiltros').classList.add('active');
-    closeVisitPanel();
-    // Scroll to filters
-    setTimeout(() => {
-      const fc = document.getElementById('routeChips');
-      if (fc) fc.scrollIntoView({ behavior: 'smooth' });
-    }, 200);
-  }
-}
-
-document.getElementById('mobileOverlay').addEventListener('click', () => {
-  mobileCloseAll();
-  closeVisitPanel();
-  document.getElementById('navMap').classList.add('active');
-});
-
-// On mobile, selecting a client from list auto-opens visit panel
-const origSelectClient = selectClient;
-function selectClient(idx, fromList = false) {
-  origSelectClient(idx, fromList);
-  if (isMobile() && fromList) {
-    setTimeout(() => {
-      mobileCloseAll();
-      document.getElementById('navVisita').classList.add('active');
-      openVisitPanel(idx);
-      document.getElementById('mobileOverlay').style.display = 'block';
-    }, 400);
-  }
-}
-</script>
-
-<script>
-
 const TIPOS = {
   "REGISTRADO CON COMPRA": { key: "rcc", label: "Reg. c/ Compra", color: "#48bb78", icon: "🟢" },
   "REGISTRADO SIN COMPRA": { key: "rsc", label: "Reg. s/ Compra", color: "#e53e3e", icon: "🔴" },
