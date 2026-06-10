@@ -33,474 +33,42 @@
 
 /* ===================== MOBILE RESPONSIVE ===================== */
 @media (max-width: 768px) {
-
-  /* HEADER — una sola fila, todo en scroll horizontal */
   header {
-    padding: 6px 10px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 6px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    min-height: 44px;
+    padding: 7px 12px;
+    flex-wrap: nowrap !important;
+    gap: 8px;
+    height: 50px;
+    min-height: 50px;
+    max-height: 50px;
     align-items: center;
+    overflow: hidden;
   }
-  header::-webkit-scrollbar { display: none; }
-  header img { height: 22px !important; flex-shrink: 0; }
-  .stats-bar {
-    display: contents;
-  }
-  .stat-chip { padding: 3px 8px; font-size: 10px; white-space: nowrap; flex-shrink: 0; }
-  .stat-chip .dot { width: 6px; height: 6px; }
-  .stat-chip .count { font-size: 11px; }
-  .user-badge { padding: 3px 8px; font-size: 10px; flex-shrink: 0; white-space: nowrap; }
-  .user-badge img { height: 14px !important; width: 14px !important; }
-  .logout-btn { font-size: 10px; flex-shrink: 0; white-space: nowrap; }
-  .upload-btn { font-size: 10px; padding: 4px 8px; flex-shrink: 0; white-space: nowrap; }
-  .progress-chip { font-size: 10px; padding: 3px 8px; flex-shrink: 0; white-space: nowrap; }
-
-  /* SIDEBAR — drawer desde la izquierda, oculto por defecto */
-  .sidebar {
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    width: 85vw !important;
-    min-width: unset !important;
-    max-width: 320px;
-    z-index: 600;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    border-right: 1px solid #2d3748;
-    padding-top: 50px;
-  }
-  .sidebar.mobile-open { transform: translateX(0); }
-  .sidebar.collapsed { transform: translateX(-100%); width: 85vw !important; }
-
-  /* Toggle btn reposicionado como hamburger en header */
+  header img { height: 24px !important; flex-shrink: 0; }
+  #statsBar { display: none !important; }
+  .user-badge { padding: 4px 10px; font-size: 11px; flex-shrink: 0; white-space: nowrap; }
+  .user-badge img { height: 16px !important; width: 16px !important; }
+  .logout-btn { font-size: 11px; flex-shrink: 0; white-space: nowrap; display: flex !important; }
+  .upload-btn { display: none !important; }
+  .progress-chip { font-size: 11px; padding: 3px 9px; flex-shrink: 0; white-space: nowrap; }
   .toggle-btn {
     position: relative !important;
     top: auto !important; left: auto !important;
     transform: none !important;
-    width: 32px; height: 32px;
-    border-radius: 6px;
+    width: 34px; height: 34px;
+    border-radius: 8px;
     flex-shrink: 0;
-    font-size: 14px;
-    order: -1;
+    font-size: 16px;
+    border: 1px solid #2d3748;
   }
-
-  /* MAP full screen */
-  #map { position: absolute; inset: 0; width: 100%; height: 100%; }
-
-  /* OVERLAY para cerrar sidebar */
-  .mobile-overlay { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 590; display: none; }
-
-  /* VISIT PANEL — drawer desde la derecha */
-  .visit-panel {
-    width: 88vw !important;
-    max-width: 340px;
-  }
-
-  /* inputs grandes para no hacer zoom en iOS */
-  .vfield input, .vfield select { font-size: 16px !important; padding: 10px 12px; }
-  .vsave-btn { padding: 14px; font-size: 14px; }
-  .vcheckbox-item { padding: 10px 12px; }
-  .vcheckbox-label { font-size: 13px; }
-  .vopen-btn { width: 50px !important; height: 50px !important; font-size: 22px !important; bottom: 20px !important; right: 12px !important; }
-  .search-box { font-size: 16px; padding: 10px 12px; }
-  .client-item { padding: 12px 14px; }
-  .client-name { font-size: 13px; }
-  .client-addr { font-size: 11px; }
-  .route-chip { font-size: 12px; padding: 5px 12px; }
-
-  /* Popup */
   .leaflet-popup-content-wrapper { max-width: 88vw !important; }
   .popup-field-label { font-size: 8px; }
   .popup-field-value { font-size: 11px; }
+  .visit-panel { width: 88vw !important; max-width: 340px; }
+  .vfield input, .vfield select { font-size: 16px !important; }
+  .vsave-btn { padding: 14px; font-size: 14px; }
+  .vopen-btn { width: 50px !important; height: 50px !important; font-size: 22px !important; bottom: 20px !important; right: 12px !important; }
+  .sidebar { width: 85vw !important; min-width: unset !important; max-width: 320px; }
 }
-
-</style>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e2e8f0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-
-  /* HEADER */
-  header {
-    background: linear-gradient(135deg, #1a1f2e 0%, #0f1117 100%);
-    border-bottom: 1px solid #2d3748;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-shrink: 0;
-    z-index: 1000;
-  }
-  .logo { font-size: 18px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
-  .logo span { color: #f6ad55; }
-  .stats-bar { display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap; }
-  .stat-chip {
-    display: flex; align-items: center; gap: 6px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    user-select: none;
-  }
-  .stat-chip:hover { background: rgba(255,255,255,0.1); }
-  .stat-chip.active { border-color: currentColor; }
-  .stat-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
-  .stat-chip .count { font-weight: 700; font-size: 13px; }
-
-  /* LAYOUT */
-  .app-body { display: flex; flex: 1; overflow: hidden; }
-
-  /* SIDEBAR */
-  .sidebar {
-    width: 340px;
-    min-width: 280px;
-    background: #1a1f2e;
-    border-right: 1px solid #2d3748;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: width 0.3s;
-  }
-  .sidebar.collapsed { width: 0; min-width: 0; }
-  .sidebar-header { padding: 14px 16px; border-bottom: 1px solid #2d3748; flex-shrink: 0; }
-  .search-box {
-    width: 100%;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 8px;
-    padding: 8px 12px;
-    color: #e2e8f0;
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .search-box:focus { border-color: #f6ad55; }
-  .search-box::placeholder { color: #718096; }
-  .results-count { font-size: 11px; color: #718096; margin-top: 8px; }
-
-  .client-list { overflow-y: auto; flex: 1; }
-  .client-list::-webkit-scrollbar { width: 4px; }
-  .client-list::-webkit-scrollbar-track { background: transparent; }
-  .client-list::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 2px; }
-
-  .client-item {
-    padding: 10px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    cursor: pointer;
-    transition: background 0.15s;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .client-item:hover { background: rgba(255,255,255,0.05); }
-  .client-item.selected { background: rgba(246,173,85,0.1); border-left: 3px solid #f6ad55; }
-  .client-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-  .client-info { flex: 1; min-width: 0; }
-  .client-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #e2e8f0; }
-  .client-addr { font-size: 11px; color: #718096; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
-  .client-type { font-size: 10px; font-weight: 600; margin-top: 3px; }
-
-  /* MAP */
-  #map { flex: 1; z-index: 1; }
-
-  /* POPUP */
-  .leaflet-popup-content-wrapper {
-    background: #1a1f2e !important;
-    border: 1px solid #2d3748 !important;
-    border-radius: 10px !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
-    color: #e2e8f0 !important;
-  }
-  .leaflet-popup-tip { background: #1a1f2e !important; }
-  .leaflet-popup-content { margin: 0 !important; min-width: 280px; }
-  .popup-body { padding: 14px 16px; }
-  .popup-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #2d3748; }
-  .popup-type-badge {
-    font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .popup-id { font-size: 14px; font-weight: 700; color: #fff; margin-left: auto; letter-spacing: 0.3px; }
-  .popup-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-  .popup-addr { font-size: 12px; color: #a0aec0; margin-bottom: 10px; }
-  .popup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .popup-field { background: rgba(255,255,255,0.04); border-radius: 6px; padding: 6px 8px; }
-  .popup-field-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; color: #718096; margin-bottom: 2px; }
-  .popup-field-value { font-size: 12px; font-weight: 600; color: #e2e8f0; }
-  .popup-field.full { grid-column: 1 / -1; }
-
-  /* TOGGLE SIDEBAR BTN */
-  .toggle-btn {
-    position: absolute;
-    top: 50%;
-    left: 340px;
-    transform: translateY(-50%);
-    z-index: 500;
-    background: #1a1f2e;
-    border: 1px solid #2d3748;
-    color: #e2e8f0;
-    width: 20px;
-    height: 48px;
-    border-radius: 0 6px 6px 0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    transition: left 0.3s, background 0.2s;
-  }
-  .toggle-btn:hover { background: #2d3748; }
-
-  /* COLORES */
-  .color-rcc { background: #48bb78; }
-  .color-rsc { background: #e53e3e; }
-  .color-pend { background: #e2e8f0; }
-  .color-ini { background: #ed8936; }
-
-  .text-rcc { color: #48bb78; }
-  .text-rsc { color: #e53e3e; }
-  .text-pend { color: #e2e8f0; }
-  .text-ini { color: #ed8936; }
-
-  .badge-rcc { background: rgba(72,187,120,0.2); color: #48bb78; }
-  .badge-rsc { background: rgba(229,62,62,0.2); color: #e53e3e; }
-  .badge-pend { background: rgba(226,232,240,0.15); color: #e2e8f0; }
-  .badge-ini { background: rgba(237,137,54,0.2); color: #ed8936; }
-
-  /* ROUTE FILTER */
-  .route-filter-wrap { margin-top: 10px; }
-  .route-filter-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; color: #718096; margin-bottom: 6px; }
-  .route-chips { display: flex; flex-wrap: wrap; gap: 5px; }
-  .route-chip {
-    font-size: 11px; font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.05);
-    color: #a0aec0;
-    cursor: pointer;
-    transition: all 0.18s;
-    user-select: none;
-  }
-  .route-chip:hover { background: rgba(246,173,85,0.15); border-color: #f6ad55; color: #f6ad55; }
-  .route-chip.active { background: rgba(246,173,85,0.18); border-color: #f6ad55; color: #f6ad55; }
-  .route-chip.all-routes { border-color: rgba(255,255,255,0.3); color: #e2e8f0; }
-  .route-chip.all-routes.active { background: rgba(255,255,255,0.1); border-color: #e2e8f0; color: #fff; }
-
-  /* FRECUENCIA FILTER */
-  .frec-filter-wrap { margin-top: 10px; }
-
-  /* VISIT PANEL */
-  .visit-panel {
-    position: absolute;
-    right: 0; top: 0; bottom: 0;
-    width: 320px;
-    background: #1a1f2e;
-    border-left: 1px solid #2d3748;
-    display: flex;
-    flex-direction: column;
-    z-index: 400;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-  }
-  .visit-panel.open { transform: translateX(0); }
-  .visit-panel-header {
-    background: #c53030;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-  }
-  .visit-panel-header-icon {
-    width: 32px; height: 32px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px; color: #fff; flex-shrink: 0;
-  }
-  .visit-panel-title { font-size: 13px; font-weight: 600; color: #fff; }
-  .visit-panel-sub { font-size: 10px; color: rgba(255,255,255,0.75); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
-  .visit-close-btn {
-    margin-left: auto;
-    background: rgba(255,255,255,0.15);
-    border: none; border-radius: 50%;
-    width: 26px; height: 26px;
-    color: #fff; font-size: 14px;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .visit-close-btn:hover { background: rgba(255,255,255,0.3); }
-  .visit-body { flex: 1; overflow-y: auto; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
-  .visit-body::-webkit-scrollbar { width: 4px; }
-  .visit-body::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 2px; }
-  .vfield { display: flex; flex-direction: column; gap: 4px; }
-  .vfield-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #718096; font-weight: 600; }
-  .vfield input, .vfield select {
-    background: rgba(255,255,255,0.07);
-    border: 1px solid #2d3748;
-    border-radius: 7px;
-    padding: 7px 10px;
-    color: #e2e8f0;
-    font-size: 12px;
-    outline: none;
-    transition: border-color 0.2s;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .vfield input:focus, .vfield select:focus { border-color: #f6ad55; }
-  .vfield select option { background: #1a1f2e; }
-  .vcheckbox-group { display: flex; flex-direction: column; gap: 6px; }
-  .vcheckbox-item {
-    display: flex; align-items: center; gap: 8px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid #2d3748;
-    border-radius: 7px;
-    padding: 7px 10px;
-    cursor: pointer;
-    transition: all 0.15s;
-    user-select: none;
-  }
-  .vcheckbox-item:hover { background: rgba(255,255,255,0.08); }
-  .vcheckbox-item.checked { background: rgba(66,153,225,0.15); border-color: #4299e1; }
-  .vcheckbox-box {
-    width: 16px; height: 16px; border-radius: 4px;
-    border: 1.5px solid #4a5568;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; font-size: 11px;
-    transition: all 0.15s;
-  }
-  .vcheckbox-item.checked .vcheckbox-box { background: #4299e1; border-color: #4299e1; color: #fff; }
-  .vcheckbox-label { font-size: 12px; color: #e2e8f0; }
-  .vdivider { border: none; border-top: 1px solid #2d3748; margin: 2px 0; }
-  .vsave-btn {
-    background: #c53030; color: #fff;
-    border: none; border-radius: 8px;
-    padding: 10px; font-size: 13px; font-weight: 600;
-    cursor: pointer; width: 100%;
-    transition: background 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-  }
-  .vsave-btn:hover { background: #e53e3e; }
-  .vsave-btn:disabled { background: #4a5568; cursor: not-allowed; }
-  .vsave-success {
-    background: rgba(72,187,120,0.15);
-    border: 1px solid #48bb78;
-    border-radius: 8px; padding: 8px 12px;
-    font-size: 12px; color: #48bb78;
-    text-align: center; display: none;
-  }
-  .vsave-error {
-    background: rgba(229,62,62,0.15);
-    border: 1px solid #e53e3e;
-    border-radius: 8px; padding: 8px 12px;
-    font-size: 12px; color: #fc8181;
-    text-align: center; display: none;
-  }
-  .vhistory-section { display: flex; flex-direction: column; gap: 6px; }
-  .vhistory-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #718096; font-weight: 600; }
-  .vhistory-item {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 7px; padding: 8px 10px;
-    font-size: 11px;
-  }
-  .vhistory-meta { display: flex; justify-content: space-between; margin-bottom: 3px; }
-  .vhistory-user { color: #f6ad55; font-weight: 600; }
-  .vhistory-date { color: #718096; }
-  .vhistory-row { color: #a0aec0; }
-  .vhistory-tag {
-    display: inline-block; font-size: 10px; font-weight: 600;
-    padding: 1px 6px; border-radius: 4px; margin-right: 4px;
-  }
-  .vtag-si { background: rgba(72,187,120,0.2); color: #48bb78; }
-  .vtag-no { background: rgba(229,62,62,0.2); color: #fc8181; }
-  .vopen-btn {
-    position: absolute;
-    bottom: 80px;
-    right: 12px;
-    z-index: 450;
-    background: #c53030;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 44px; height: 44px;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, transform 0.2s;
-  }
-  .vopen-btn:hover { background: #e53e3e; transform: scale(1.08); }
-  .vclient-info-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px; padding: 8px 10px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .vclient-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .vclient-info-name { font-size: 12px; font-weight: 600; color: #e2e8f0; }
-  .vclient-info-sub { font-size: 10px; color: #718096; margin-top: 1px; }
-  .vloading { text-align: center; color: #718096; font-size: 12px; padding: 12px 0; }
-  .vempty { text-align: center; color: #4a5568; font-size: 12px; padding: 12px 0; }
-  /* Admin mode */
-  .admin-mode-btn {
-    background: none; border: none;
-    color: #4a5568; font-size: 10px;
-    cursor: pointer; padding: 4px 8px;
-    border-radius: 4px; transition: all 0.2s;
-    text-decoration: underline;
-  }
-  .admin-mode-btn:hover { color: #a0aec0; }
-  .admin-mode-btn.active { color: #f6ad55; }
-  .vdelete-btn {
-    background: none; border: none;
-    color: #e53e3e; font-size: 11px;
-    cursor: pointer; padding: 2px 7px;
-    border-radius: 4px; transition: background 0.15s;
-    font-weight: 600; flex-shrink: 0;
-    opacity: 0.8;
-  }
-  .vdelete-btn:hover { background: rgba(229,62,62,0.15); opacity: 1; }
-  .admin-badge {
-    display: inline-block; font-size: 10px; font-weight: 700;
-    background: rgba(246,173,85,0.2); color: #f6ad55;
-    border: 1px solid #f6ad55; border-radius: 4px;
-    padding: 2px 7px; margin-left: 6px;
-  }
-
-/* Admin export btn */
-  .vexport-section { padding: 10px 16px; border-top: 1px solid #2d3748; flex-shrink: 0; }
-  .vexport-btn {
-    background: rgba(72,187,120,0.12);
-    color: #48bb78;
-    border: 1px solid #48bb78;
-    border-radius: 8px; padding: 8px;
-    font-size: 12px; font-weight: 600;
-    cursor: pointer; width: 100%;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    transition: background 0.2s;
-  }
-  .vexport-btn:hover { background: rgba(72,187,120,0.22); }
-  .vadmin-note { font-size: 10px; color: #4a5568; text-align: center; margin-top: 4px; }
-
-/* MOBILE COUNTS BAR */
-.mobile-counts-bar {
-  display: none;
-  background: #1a1f2e;
-  border-top: 1px solid #2d3748;
-  overflow-x: auto;
-  gap: 6px;
-  padding: 5px 12px;
-  scrollbar-width: none;
-  align-items: center;
-  flex-shrink: 0;
-}
-.mobile-counts-bar::-webkit-scrollbar { display: none; }
 
 /* ===================== FILE UPLOAD PANEL ===================== */
 .upload-btn {
@@ -819,13 +387,9 @@
     <div class="client-list" id="clientList"></div>
   </div>
 
-  <div id="mobileOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:590;" onclick="closeMobileSidebar()"></div>
-  <button class="toggle-btn" id="toggleBtn" title="Mostrar/ocultar panel">☰</button>
+  <button class="toggle-btn" id="toggleBtn" title="Mostrar/ocultar panel">◀</button>
 
   <div id="map"></div>
-
-  <!-- MOBILE COUNTS BAR -->
-  <div class="mobile-counts-bar" id="mobileCountsBar"></div>
 
   <!-- VISIT PANEL -->
   <div class="visit-panel" id="visitPanel">
@@ -1002,11 +566,11 @@ function doLogin() {
 
     updateMarkers();
     buildStatsBar();
-    buildMobileCountsBar();
     buildRouteChips();
     buildFrecChips();
     renderList();
     updateProgressChip();
+    applyMobileLayout();
 
     // Highlight active route chip
     if (user !== 'admin') {
@@ -1046,7 +610,6 @@ function doLogout() {
   document.getElementById('logoutBtn').style.display = 'none';
   updateMarkers();
   buildStatsBar();
-  buildMobileCountsBar();
   buildRouteChips();
   buildFrecChips();
   renderList();
@@ -1080,6 +643,13 @@ let localVisits = JSON.parse(localStorage.getItem('visitas_champion') || '[]');
 
 function saveLocalVisits() {
   localStorage.setItem('visitas_champion', JSON.stringify(localVisits));
+}
+
+function applyMobileLayout() {
+  if (window.innerWidth <= 768) {
+    const sb = document.getElementById('statsBar');
+    if (sb) sb.style.cssText = 'display:none!important';
+  }
 }
 
 function updateProgressChip() {
@@ -1494,33 +1064,6 @@ CLIENTES.forEach((c, idx) => {
 });
 
 // STATS BAR
-function buildMobileCountsBar() {
-  const bar = document.getElementById('mobileCountsBar');
-  if (!bar) return;
-  const visibleClients = (!currentUser || currentUser === 'admin')
-    ? CLIENTES
-    : CLIENTES.filter(c => c.CHAMPIONRUTA === currentUser);
-  const counts = {};
-  visibleClients.forEach(c => { counts[c.TIPOVISITA] = (counts[c.TIPOVISITA] || 0) + 1; });
-  bar.innerHTML = '';
-  Object.entries(TIPOS).forEach(([key, t]) => {
-    if (!counts[key]) return;
-    const chip = document.createElement('div');
-    chip.className = `stat-chip active text-${t.key}`;
-    chip.dataset.tipo = key;
-    chip.style.cssText = 'flex-shrink:0;white-space:nowrap;';
-    chip.innerHTML = `<span class="dot color-${t.key}"></span><span>${t.label}</span><span class="count">${counts[key]}</span>`;
-    chip.addEventListener('click', () => toggleFilter(key, chip));
-    bar.appendChild(chip);
-  });
-  const total = document.createElement('div');
-  total.className = 'stat-chip';
-  total.style.cssText = 'flex-shrink:0;white-space:nowrap;border-color:#4a5568;';
-  const totalLabel = (!currentUser || currentUser === 'admin') ? 'Total' : currentUser;
-  total.innerHTML = `<span style="color:#a0aec0">${totalLabel}</span><span class="count" style="color:#fff">${visibleClients.length}</span>`;
-  bar.appendChild(total);
-}
-
 function buildStatsBar() {
   const bar = document.getElementById('statsBar');
   // Filter clients by current user if not admin
@@ -1776,35 +1319,16 @@ document.getElementById('searchBox').addEventListener('input', e => {
 const sidebar = document.getElementById('sidebar');
 const toggleBtn = document.getElementById('toggleBtn');
 
-function isMobile() { return window.innerWidth <= 768; }
-
-function closeMobileSidebar() {
-  sidebar.classList.remove('mobile-open');
-  document.getElementById('mobileOverlay').style.display = 'none';
-  toggleBtn.textContent = '☰';
-}
-
 toggleBtn.addEventListener('click', () => {
-  if (isMobile()) {
-    const isOpen = sidebar.classList.contains('mobile-open');
-    if (isOpen) {
-      closeMobileSidebar();
-    } else {
-      sidebar.classList.add('mobile-open');
-      document.getElementById('mobileOverlay').style.display = 'block';
-      toggleBtn.textContent = '✕';
-    }
+  sidebar.classList.toggle('collapsed');
+  if (sidebar.classList.contains('collapsed')) {
+    toggleBtn.style.left = '0';
+    toggleBtn.textContent = '▶';
   } else {
-    sidebar.classList.toggle('collapsed');
-    if (sidebar.classList.contains('collapsed')) {
-      toggleBtn.style.left = '0';
-      toggleBtn.textContent = '▶';
-    } else {
-      toggleBtn.style.left = '340px';
-      toggleBtn.textContent = '◀';
-    }
-    setTimeout(() => map.invalidateSize(), 320);
+    toggleBtn.style.left = '340px';
+    toggleBtn.textContent = '◀';
   }
+  setTimeout(() => map.invalidateSize(), 320);
 });
 
 // =============================================
@@ -1826,7 +1350,6 @@ function rebuildMapFromClientes() {
     markers[idx] = marker;
   });
   buildStatsBar();
-  buildMobileCountsBar();
   buildRouteChips();
   buildFrecChips();
   renderList();
@@ -1865,6 +1388,7 @@ async function loadFromGitHub() {
     }
   }
   rebuildMapFromClientes();
+  applyMobileLayout();
   [200, 500, 1000, 1500].forEach(t => setTimeout(() => map.invalidateSize(), t));
   // Hide loading, show login
   document.getElementById('loadingScreen').classList.add('hidden');
