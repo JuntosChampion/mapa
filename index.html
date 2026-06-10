@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>html { height: 100%; } body { height: 100%; touch-action: manipulation; }</style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -33,7 +34,7 @@
 </style>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e2e8f0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e2e8f0; height: 100%; min-height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
   /* HEADER */
   header {
@@ -66,7 +67,7 @@
   .stat-chip .count { font-weight: 700; font-size: 13px; }
 
   /* LAYOUT */
-  .app-body { display: flex; flex: 1; overflow: hidden; }
+  .app-body { display: flex; flex: 1; overflow: hidden; min-height: 0; position: relative; }
 
   /* SIDEBAR */
   .sidebar {
@@ -476,8 +477,8 @@
   .toggle-btn { display: none !important; }
 
   /* MAP full screen */
-  #map { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .app-body { height: calc(100vh - 60px); }
+  #map { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+  .app-body { position: relative; }
 
   /* MOBILE BOTTOM NAV */
   .mobile-nav {
@@ -1897,7 +1898,7 @@ async function loadFromGitHub() {
     }
   }
   rebuildMapFromClientes();
-  setTimeout(() => map.invalidateSize(), 500);
+  [200, 500, 1000, 1500].forEach(t => setTimeout(() => map.invalidateSize(), t));
   // Hide loading, show login
   document.getElementById('loadingScreen').classList.add('hidden');
   // Set loading logo
@@ -1930,7 +1931,14 @@ document.getElementById('exportBtn').addEventListener('click', exportarVisitas);
 
 // Fix map rendering on mobile orientation change
 window.addEventListener('resize', () => setTimeout(() => map.invalidateSize(), 200));
-window.addEventListener('orientationchange', () => setTimeout(() => map.invalidateSize(), 500));
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => map.invalidateSize(), 300);
+  setTimeout(() => map.invalidateSize(), 800);
+});
+// Repeated invalidation on mobile to force tile loading
+if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+  [100, 300, 600, 1000, 2000].forEach(t => setTimeout(() => map.invalidateSize(), t));
+}
 </script>
 </body>
 </html>
