@@ -719,6 +719,20 @@
   flex-shrink: 0;
 }
 .logout-btn:hover { color: #e2e8f0; }
+.progress-chip {
+  display: none;
+  align-items: center; gap: 6px;
+  background: rgba(72,187,120,0.12);
+  border: 1px solid rgba(72,187,120,0.35);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px; font-weight: 600;
+  color: #9ae6b4;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.progress-chip .prog-done { color: #48bb78; font-size: 14px; }
+.progress-chip .prog-total { color: #718096; }
 
 </style>
 </head>
@@ -772,7 +786,10 @@
     <span id="userBadgeIcon">👤</span><span id="userBadgeText"></span>
   </div>
   <button class="logout-btn" id="logoutBtn" style="display:none" onclick="doLogout()" title="Cerrar sesión">Salir ↩</button>
-  <label class="upload-btn" for="fileInput" title="Cargar nuevo Excel" id="uploadBtnWrap">
+  <div class="progress-chip" id="progressChip">
+    ✅ <span id="progDone" class="prog-done">0</span><span class="prog-total" id="progTotal">/0 hoy</span>
+  </div>
+  <label class="upload-btn" for="fileInput" title="Cargar nuevo Excel" id="uploadBtnWrap" style="display:none">
     📂 Actualizar Excel
   </label>
   <input type="file" id="fileInput" accept=".xlsx,.xls">
@@ -1075,6 +1092,7 @@ function doLogin() {
     buildRouteChips();
     buildFrecChips();
     renderList();
+    updateProgressChip();
 
     // Highlight active route chip
     if (user !== 'admin') {
@@ -1149,6 +1167,39 @@ function saveLocalVisits() {
   localStorage.setItem('visitas_champion', JSON.stringify(localVisits));
 }
 
+function updateProgressChip() {
+  const chip = document.getElementById('progressChip');
+  if (!currentUser || currentUser === 'admin') {
+    chip.style.display = 'none';
+    return;
+  }
+
+  // Get today's date in Buenos Aires timezone
+  const now = new Date();
+  const bsas = new Date(now.toLocaleString('en-US', { timeZone: 'America/Argentina/Buenos_Aires' }));
+  const todayStr = bsas.getFullYear() + '-' +
+    String(bsas.getMonth()+1).padStart(2,'0') + '-' +
+    String(bsas.getDate()).padStart(2,'0');
+
+  // Count unique clients visited today by this user
+  const visitedTodayIds = new Set(
+    localVisits
+      .filter(v => {
+        if (String(v.usuario) !== currentUser) return false;
+        const vDate = v.fecha ? v.fecha.slice(0,10) : '';
+        return vDate === todayStr;
+      })
+      .map(v => String(v.cliente))
+  );
+
+  // Total clients for this user
+  const userTotal = CLIENTES.filter(c => c.CHAMPIONRUTA === currentUser).length;
+
+  document.getElementById('progDone').textContent = visitedTodayIds.size;
+  document.getElementById('progTotal').textContent = '/' + userTotal + ' hoy';
+  chip.style.display = 'flex';
+}
+
 function toggleAdminMode() {
   if (isAdminMode) {
     isAdminMode = false;
@@ -1176,6 +1227,7 @@ function deleteVisit(visitId) {
   refreshMarkerIcon(currentVisitIdx);
   renderList(document.getElementById('searchBox').value);
   renderVisitPanel(currentVisitIdx);
+  updateProgressChip();
 }
 
 function openVisitPanel(idx) {
@@ -1353,6 +1405,7 @@ async function guardarVisita() {
 
   // Refresh marker icon to visited (green tick)
   refreshMarkerIcon(currentVisitIdx);
+  updateProgressChip();
 
   // Refresh list to show visited badge
   renderList(document.getElementById('searchBox').value);
@@ -1433,6 +1486,10 @@ function processExcelFile(file) {
 
       // Save to localStorage so data persists on reload
       localStorage.setItem('clientes_champion', JSON.stringify(CLIENTES));
+      // Clear visit history when new Excel is loaded
+      localVisits = [];
+      saveLocalVisits();
+      updateProgressChip();
 
       // Show success toast
       const toast = document.getElementById('uploadToast');
